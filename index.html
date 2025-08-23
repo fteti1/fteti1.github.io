@@ -1,0 +1,224 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Konstad, LLC - Investment Company in Charlotte, NC, focusing on traditional markets and technology innovation">
+  <title>Konstad, LLC.</title>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.20.15/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+  </script>
+  <style>
+    @keyframes shapeShift {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .shape-animation {
+      animation: shapeShift 20s infinite linear;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState } = React;
+
+    // Navigation Component with Clickable Logo
+    const NavBar = () => (
+      <nav className="fixed top-0 w-full bg-white shadow-md z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+          <div className="flex items-center">
+            <a href="#hero">
+              <img src="konstad-logo.png" alt="Konstad Logo" className="md:h-24 h-12 w-auto" />
+            </a>
+          </div>
+          <div className="flex space-x-8">
+            <a href="#about" className="text-gray-600 hover:text-blue-600 transition">About</a>
+            <a href="#portfolio" className="text-gray-600 hover:text-blue-600 transition">Portfolio</a>
+            <a href="#contact" className="text-gray-600 hover:text-blue-600 transition">Contact</a>
+          </div>
+        </div>
+      </nav>
+    );
+
+    // Hero Section with ID
+    const Hero = () => (
+      <section id="hero" className="relative h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-gray-100 overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full">
+          <svg className="shape-animation" width="200" height="200" viewBox="0 0 200 200" style={{ position: 'absolute', top: '10%', left: '10%' }}>
+            <circle cx="100" cy="100" r="80" fill="rgba(59, 130, 246, 0.2)" />
+          </svg>
+          <svg className="shape-animation" width="150" height="150" viewBox="0 0 150 150" style={{ position: 'absolute', bottom: '20%', right: '15%' }}>
+            <rect width="150" height="150" rx="20" fill="rgba(192, 192, 192, 0.3)" />
+          </svg>
+        </div>
+        <div className="text-center z-10">
+          <h2 className="text-5xl font-extrabold text-gray-900 mb-4">Investing in the Future</h2>
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            Konstad, based in Charlotte, NC, drives the future by investing in traditional markets and empowering innovators with great ideas.
+          </p>
+          <a href="#portfolio" className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
+            Explore Our Portfolio
+          </a>
+        </div>
+      </section>
+    );
+
+    // About Section
+    const About = () => (
+      <section id="about" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-gray-900 mb-8 text-center">About Konstad</h2>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto text-center">
+            Inspired by Charlotte’s “Queen City” legacy, Konstad is a company dedicated to solid investments while also fostering innovation in technology. We partner with visionary firms to accelerate growth and impact; building a brighter, more connected future.
+          </p>
+        </div>
+      </section>
+    );
+
+    // Portfolio Section with Two Centered Companies
+    const Portfolio = () => (
+      <section id="portfolio" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">Our Portfolio</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center mx-auto">
+            {[
+              { name: "Konstad Realty", desc: "Investing in real estate in the Carolinas." },
+              { name: "Marstad Realty", desc: "Investing in real estate in Tennessee." },
+            ].map((firm, index) => (
+              <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition w-full max-w-sm">
+                <h3 className="text-xl font-semibold text-blue-600 mb-2">{firm.name}</h3>
+                <p className="text-gray-600">{firm.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+
+    // Contact Section
+    const Contact = () => (
+      <section id="contact" className="py-20 bg-blue-600 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold mb-8 text-center">Get in Touch</h2>
+          <p className="text-lg max-w-3xl mx-auto text-center mb-8">
+            Interested in partnering with us or learning more about our portfolio? Reach out today.
+          </p>
+          <div className="text-center">
+            <a href="mailto:info@konstad.com" className="inline-block bg-white text-blue-600 px-6 py-3 rounded-full hover:bg-gray-100 transition">
+              Contact Us
+            </a>
+          </div>
+        </div>
+      </section>
+    );
+
+    // Footer Section
+    const Footer = () => (
+      <footer className="bg-gray-100 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-gray-600 text-sm">
+            Copyright 2025 Konstad, LLC. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    );
+
+    // Main App Component
+    const App = () => (
+      <div>
+        <NavBar />
+        <Hero />
+        <About />
+        <Portfolio />
+        <Contact />
+        <Footer />
+      </div>
+    );
+
+    // Render the app
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
