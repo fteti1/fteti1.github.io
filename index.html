@@ -114,7 +114,7 @@
           </div>
           <div className="flex space-x-8">
             <a href="#about" className="text-gray-600 hover:text-blue-600 transition">About</a>
-            <a href="#portfolio" className="text-gray-600 hover:text-blue-600 transition">Portfolio</a>
+            <a href="#portfolio" className="text-gray-600 hover:text-blue-600 transition">Services</a>
             <a href="#contact" className="text-gray-600 hover:text-blue-600 transition">Contact</a>
           </div>
         </div>
@@ -138,7 +138,7 @@
             Konstad, based in Charlotte, NC, drives the future by investing in traditional markets and empowering innovators with great ideas.
           </p>
           <a href="#portfolio" className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
-            Explore Our Portfolio
+            Explore Our Products & Services
           </a>
         </div>
       </section>
@@ -156,15 +156,15 @@
       </section>
     );
 
-    // Portfolio Section with Two Centered Companies
+    // Portfolio Section with Three Centered Companies
     const Portfolio = () => (
       <section id="portfolio" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">Our Portfolio</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">Products and Services</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center mx-auto">
             {[
-              { name: "IT Services", desc: "Managed Services" },
-              { name: "Software Development", desc: "Traditional Software Development" },
+              { name: "IT Services", desc: "Managed IT Services." },
+              { name: "Software Development", desc: "Traditional Software Development augmentation services." },
             ].map((firm, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition w-full max-w-sm">
                 <h3 className="text-xl font-semibold text-blue-600 mb-2">{firm.name}</h3>
@@ -182,7 +182,7 @@
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold mb-8 text-center">Get in Touch</h2>
           <p className="text-lg max-w-3xl mx-auto text-center mb-8">
-            Interested in partnering with us or learning more about our portfolio? Reach out today.
+            Interested in partnering with us or learning more about our services? Reach out today.
           </p>
           <div className="text-center">
             <a href="mailto:info@konstad.com" className="inline-block bg-white text-blue-600 px-6 py-3 rounded-full hover:bg-gray-100 transition">
